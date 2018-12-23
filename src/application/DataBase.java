@@ -3,6 +3,7 @@ package application;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DataBase {
@@ -66,6 +67,29 @@ public class DataBase {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static void traverse(String dbName,String tabName) {
+		
+		String traverseSQL = "SELECT * FROM " + dbName + "." + tabName;
+		
+		try {
+			
+			PreparedStatement stmt = conn.prepareStatement(traverseSQL);
+			ResultSet rs = stmt.executeQuery(traverseSQL);
+			
+			while(rs.next())
+			{
+				int id = rs.getInt(1) ;
+				String name = rs.getString("name") ;
+				String cellphone = rs.getString("cellphone") ;
+				String birthday = rs.getString("birthday") ;
+				
+				System.out.printf("%d ;%s ;%s ;%s\n",id,name,cellphone,birthday);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
